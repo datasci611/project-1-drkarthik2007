@@ -1,0 +1,113 @@
+---
+title: "Project1_BIOS 611"
+Author : Karthik Adapa - 7301-09108
+output: html_document
+---
+
+
+
+## R Markdown
+
+
+
+```{r warning=FALSE}
+library(tidyverse)
+
+data(msleep)
+#summary(msleep)
+#filter(msleep, sleep_total > 5)
+#filter(msleep, vore == "herbi")
+ggplot(msleep)+ 
+  geom_point(aes(log10(msleep$brainwt),sleep_total))+facet_wrap(~vore)
+
+```
+The above figure has been derived from the “msleep” datasets in R, which is an updated sleep times and weights were taken from V. M. Savage and G. B. West. A quantitative, theoretical framework for understanding mammalian sleep and has 11 variables. I have focused on analyzing whether brain weight are total sleep hours are related to each other in carnivores, omnivores and filtered out the herbivores. I have also filtered out those mammals with less than 5 sleep hours. Brain weight and total sleep hours may be closely related to each other. 
+
+As a next step, it would be interesting to understand which of the factors -brain vs body weight has a greater relationship with the sleep hours of mammals
+
+
+```{r}
+library(ggplot2)
+library(dplyr)
+data(iris)
+head(iris)
+ggplot(iris, aes(x=Sepal.Width,y= Sepal.Length, color = Species))+
+  geom_point()+
+  geom_vline(xintercept = 2.5, color= 'blue')+
+  annotate('text',label ='Small Sepal', x= 2.25, y=7.75 , color ='red')+
+  annotate('text',label= 'Large Sepal', x=3.0,y= 7.75, color = 'red')+
+  ggtitle('Iris Species by Sepal Length and Width')
+
+ggplot(iris, aes(x=Petal.Width,y= Petal.Length, color = Species))+
+  geom_point()+
+  geom_vline(xintercept = 0.9, color= 'blue')+
+  annotate('text',label ='Small Petal', x= 0.5, y=7.75 , color ='red')+
+  annotate('text',label= 'Large Petal', x=2.0,y= 7.75, color = 'red')+
+  ggtitle('Iris Species by Petal Length and Width')  
+
+```
+	Iris species by Sepal /Petal Length and Width
+	
+	
+The above two figures have been derived from the “iris” datasets in R, which gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica. Sepal properties and petal properties have been plotted for all the four species and categorized as small /large sepal and petal sizes. Setosa species had small petal size based on the sepal related variables. Such a distinctive characterization is difficult using the sepal variables while versicolor species had more number in the small sepal size category. 
+
+As a next step, it would be interesting to use all the four variables and see their interactions among the four species and also use the sepal length and petal length vs sepal width and petal width and analyze the difference among the four species.
+
+
+
+```{r}
+
+library(tidyverse)
+library(datasets)
+data(mtcars)
+mtcars = mtcars[complete.cases(mtcars),]
+head(mtcars)
+mtcars <- mutate(mtcars, txtype=ifelse(!am, "auto", "manual"))
+boxplot(mpg~txtype*cyl, data=mtcars, 
+        col = (c("lightgreen","lightblue")), main = "Motor Trend Car Dataset", 
+        xlab = "Transmission-Type.Number of cylinders", ylab = "Miles / (US) gallon")
+
+
+```
+	Motor Trend Cars Dataset
+
+This figure was derived from the “mtcars” data set in R, which was extracted from the 1974 Motor Trend US magazine, and comprises fuel consumption and 10 aspects of automobile design and performance for 32 automobiles (1973–74 models). I have considered three important aspects of automobile design- miles per gallon, number of cylinders and transmission type and plotted the information in a box plot. Boxplots don’t provide any information about the distribution but can be readily used for comparison. The manual transmission type car with 4 cylinders has the highest median value for miles /(US)gallon and both automatic and manual cars with 8 cylinders have the lowest median value for miles/(US) gallon. Further, irrespective of the number of cylinders manual cars give higher or equal miles/gallon than automatic cars. 
+
+As a next step, it would be interesting to include other variables like horse-power, weight, gears and how they would influence miles/gallon and whether manual cars would consistently be more fuel efficient than their counterpart automatic cars of identical features. 
+
+
+
+```{r}
+library("ggplot2")
+data("USArrests")
+summary(USArrests)
+head(USArrests)
+any(is.na(USArrests))
+ggplot(data= USArrests, mapping= aes(x= Assault))+
+  geom_histogram(binwidth = 50)+
+  geom_vline(xintercept = 100, color = 'blue')+
+  annotate('text', label='Less Arrests', x= 50, y=10, color='red') +
+  annotate('text', label='More Arrests', x=200, y= 10, color='red') +
+  theme_bw() +
+  xlab('Assault') +
+  ylab('Count of Arrests')
+
+ggplot(data= USArrests, mapping= aes(x= Murder))+
+  geom_histogram(binwidth = 10)+
+  geom_vline(xintercept = 10, color = 'blue')+
+  annotate('text', label='Less Arrests', x= 10, y=10, color='red') +
+  annotate('text', label='More Arrests', x=50, y= 10, color='red') +
+  theme_bw() +
+  xlab('Murder') +
+  ylab('Count of Arrests')
+
+
+```
+
+The above figure has been derived from the “USArrests” datasets in R, which gives arrests per 100,000 residents for assault, murder, and rape in each of the 50 US states in 1973. It also gives the percent of the population living in urban areas. For this dataset, I have focused on understanding the distribution of assaults, murders in all the 50 states and categorized them into two broad categories based on the number of assaults /murders. Logically, we would assume fewer arrests that could be attributed to murders and more arrests due to assaults and the distribution of the counts of arrests on both the histograms does justify that assumption.  
+
+
+As a next step, it would be interesting to use all the three variables and answer interesting questions such as “Are states on the eastern coast likely to have more/less arrests due to assault, murder and rape in comparison to states on the  western coast ?”
+
+
+
